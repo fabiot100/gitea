@@ -1,0 +1,35 @@
+version:  "3.9"
+
+services:
+  gitea:
+    image: gitea/gitea:latest
+    depends_on:
+      - mysql_gitea
+    container_name: gitea
+    volumes:
+      - ./gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:3000"
+      - "222:22"
+    env_file:
+      - ./env/gitea.env
+    restart: always
+    networks:
+      - gitea
+
+  mysql_gitea:
+    image: mysql:8
+    container_name: mysql_gitea
+    restart: always
+    env_file:
+      - ./env/mysql_gitea.env
+    volumes:
+      - ./mysql/:/var/lib/mysql
+    networks:
+      - gitea
+
+networks:
+  gitea:
+    external: false
