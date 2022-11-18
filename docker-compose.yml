@@ -15,18 +15,34 @@ services:
       - "222:22"
     env_file:
       - ./env/gitea.env
-    restart: always
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 500M
     networks:
       - gitea
 
   mysql_gitea:
     image: mysql:8
     container_name: mysql_gitea
-    restart: always
     env_file:
       - ./env/mysql_gitea.env
     volumes:
       - ./mysql/:/var/lib/mysql
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 500M
     networks:
       - gitea
 
