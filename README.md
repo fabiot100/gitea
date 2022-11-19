@@ -8,7 +8,7 @@ Rename the **env/gitea.env_example** and **env/mysql_gitea.env_example** files t
 
 ## Deploy
 
-To deploy the containers, just follow the command bellow:
+To deploy the containers, just follow the command below:
 
 ```shell
 docker compose up -d
